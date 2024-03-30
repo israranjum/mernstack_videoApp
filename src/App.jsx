@@ -1,5 +1,6 @@
 import React from "react";
 import VideoList from "./components/VideoList";
+import GetData from "./components/FormHandle/GetData";
 
 const App = () => {
   // const [count, setCount]= React.useState(0)
@@ -21,6 +22,7 @@ const App = () => {
 
 
         <VideoList></VideoList>
+        {/* <GetData></GetData> */}
         
       </div>
 
