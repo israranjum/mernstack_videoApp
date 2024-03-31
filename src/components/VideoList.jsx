@@ -6,16 +6,41 @@ import AddVideo from "./AddVideo.jsx";
 
 const VideoList = () => {
   const [videos,setVideo]=useState(Data)
+  const [editableVideo,setEditableVideo]=useState()
 
   function addVideo(video){
     setVideo([...videos,{...video,id:videos.length+1}])
     console.log(video)
 
   }
+
+  function deleteVideo(id){
+    // console.log(id)
+    const deleteOne = videos.filter(video => video.id !== id)
+    // console.log(deleteOne)
+    setVideo(deleteOne)
+  }
+
+  function editVideo(id){
+    console.log(id)
+    const editOne = videos.find(video => video.id === id)
+    setEditableVideo(editOne)
+  }
+
+  function updateVideo(video){
+    const index= videos.findIndex(v => v.id === video.id)
+    const newVideo = [...videos]
+    // console.log(index)
+    newVideo.splice(index,1,video)
+    setVideo(newVideo)
+  }
+
+
+
   return (
     <div style={{ marginTop: "10px" }}>
       <div>
-        <AddVideo addVideo={addVideo}></AddVideo>
+        <AddVideo addVideo={addVideo} editableVideo={editableVideo} updateVideo={updateVideo}></AddVideo>
       </div>
       <div
         style={{
@@ -34,6 +59,8 @@ const VideoList = () => {
               channel={video.channel}
               view={video.view}
               time={video.time}
+              editVideo={editVideo}
+              deleteVideo={deleteVideo}
               verified={video.verified}
             >
               <PlayButton

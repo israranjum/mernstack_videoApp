@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const initialValue = {
   id: 0,
@@ -8,7 +8,7 @@ const initialValue = {
   time: "1 year ago",
   verified: true,
 };
-const AddVideo = ({ addVideo }) => {
+const AddVideo = ({ addVideo, editableVideo, updateVideo }) => {
   const [video, setVideo] = React.useState(initialValue);
 
   function handleChange(e) {
@@ -18,9 +18,21 @@ const AddVideo = ({ addVideo }) => {
   }
   function handleSubmit(e) {
     e.preventDefault();
-    addVideo(video);
+    if(editableVideo){
+      updateVideo(video)
+    }else{
+      addVideo(video)
+    }
+ 
     setVideo(initialValue);
   }
+
+
+  useEffect(()=>{
+    if(editableVideo){
+      setVideo(editableVideo)
+    }
+  },[editableVideo])
   return (
     <form>
       <input
@@ -37,7 +49,7 @@ const AddVideo = ({ addVideo }) => {
         placeholder="Enter Views "
         onChange={handleChange}
       />
-      <button onClick={handleSubmit}>Add Video </button>
+      <button onClick={handleSubmit}>{editableVideo ? "Edit Video" : "Add Video"} </button>
     </form>
   );
 };
